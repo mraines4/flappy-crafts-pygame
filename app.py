@@ -3,7 +3,6 @@ import pygame
 def main():
     width = 800
     height = 800
-    blue_color = (97, 159, 182)
 
     pygame.init()
     screen = pygame.display.set_mode((width, height))
@@ -11,7 +10,8 @@ def main():
     clock = pygame.time.Clock()
 
     # Game initialization
-    background_image = pygame.image.load('images/background.png')
+    background_image = pygame.image.load('images/background.png').convert_alpha()
+    dc_logo = pygame.image.load('images/DC-logo.png').convert_alpha()
 
     stop_game = False
     while not stop_game:
@@ -29,6 +29,7 @@ def main():
         screen.blit(background_image, (0,0))
 
         # Game display
+        screen.blit(dc_logo, (0,400))
 
         pygame.display.update()
         clock.tick(60)
