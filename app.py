@@ -12,6 +12,8 @@ def main():
     # Game initialization
     background_image = pygame.image.load('images/background.png').convert_alpha()
     dc_logo = pygame.image.load('images/DC-logo.png').convert_alpha()
+    pipes = pygame.image.load('images/pipes.png').convert_alpha()
+
 
     stop_game = False
     while not stop_game:
@@ -29,7 +31,8 @@ def main():
         screen.blit(background_image, (0,0))
 
         # Game display
-        screen.blit(dc_logo, (0,400))
+        screen.blit(dc_logo, (60,400))
+        screen.blit(pipes, (0,-40))
 
         pygame.display.update()
         clock.tick(60)
