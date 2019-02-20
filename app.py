@@ -32,8 +32,10 @@ def main():
 
         # Game display
         screen.blit(dc_logo, (60,400))
-        screen.blit(pipes, (0,-40))
-
+        screen.blit(pipes, (0,-400)),
+        screen.blit(pipes, (100,-100)),
+        screen.blit(pipes, (200,-200)),
+        screen.blit(pipes, (300,-300))
         pygame.display.update()
         clock.tick(60)
 
