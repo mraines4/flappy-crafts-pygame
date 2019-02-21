@@ -111,7 +111,7 @@ def main():
             rndm_yup = randint(400, 600)
             rndm_ydn = randint(-400, -200)
             pipe_list.append(PipesDown(750, rndm_ydn, -10))
-            pipe_list.append(Pipes(750, rndm_yup, -10))
+            pipe_list.append(Pipes(750, (rndm_ydn + 100), -10))
             timer_count = 60
 
 
