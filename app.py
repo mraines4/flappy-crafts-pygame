@@ -8,7 +8,7 @@ class DC(object):
         self.image = pygame.image.load('images/DC-logo.png').convert_alpha()
         self.x = 60
         self.y = 400
-        self.dir_y = 20
+        self.dir_y = 10
 
     def draw(self, surface):
         surface.blit(self.image, (self.x, self.y))
@@ -22,7 +22,7 @@ class Pipes(object):
         self.image = pygame.image.load('images/pipes.png').convert_alpha()
         self.x = 1000
         self.y = 0
-        self.dir_x = -20
+        self.dir_x = -10
 
     def draw(self, surface):
         surface.blit(self.image, (self.x, self.y))
@@ -39,8 +39,8 @@ pipe_list = [
 
 
 def main():
-    width = 800
-    height = 800
+    width = 750
+    height = 750
 
     pygame.init()
     screen = pygame.display.set_mode((width, height))
@@ -66,14 +66,14 @@ def main():
                     dc_logo.image = pygame.image.load('images/DC-logo-tilt.png').convert_alpha()
             if event.type == pygame.KEYUP:
                 if event.key == KEY_UP:
-                    dc_logo.dir_y = 15
+                    dc_logo.dir_y = 10
                     dc_logo.image = pygame.image.load('images/DC-logo.png').convert_alpha()
 
             # stops the logo from going off the screen
             if dc_logo.y < 0:
                 dc_logo.y = 0
-            if dc_logo.y >= 800:
-                dc_logo.y = 800
+            if dc_logo.y >= 750:
+                dc_logo.y = 750
 
             # quits game if red box clicked
             if event.type == pygame.QUIT:
