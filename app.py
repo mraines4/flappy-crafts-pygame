@@ -44,6 +44,23 @@ class Pipes(pygame.sprite.Sprite):
     def update(self, width):
         self.rect.x += self.speed
 
+class PipesDown(pygame.sprite.Sprite):
+    def __init__(self, x, y, speed):
+        self.image = pygame.image.load('images/down-pipe.png').convert_alpha()
+        self.x = x
+        self.y = y
+        self.speed = speed
+        self.rect = self.image.get_rect()
+        pygame.sprite.Sprite.__init__(self)
+        self.rect.x = x
+        self.rect.y = y
+
+    def display(self, screen):
+        screen.blit(self.image, (self.x, self.y))
+
+    def update(self, width):
+        self.rect.x += self.speed
+
 
 def main():
     width = 750
@@ -90,10 +107,13 @@ def main():
 
         # set timer over
         timer_count -= 1
-        if timer_count == 0 and len(pipe_list) < 10:
+        if timer_count == 0 and len(pipe_list) < 20:
+            rndm_yup = randint(0, 800)
+            rndm_ydn = randint(-400, -100)
+            pipe_list.append(PipesDown(750, rndm_ydn, -10))
+            pipe_list.append(Pipes(750, rndm_yup, -10))
             timer_count = 60
-            rndm_y = randint(-400, -100)
-            pipe_list.append(Pipes(750, rndm_y, -10))
+
 
 
         # Game logic
