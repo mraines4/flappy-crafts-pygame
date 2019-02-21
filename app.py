@@ -21,7 +21,7 @@ class Pipes(object):
     def __init__(self):
         self.image = pygame.image.load('images/pipes.png').convert_alpha()
         self.x = 1000
-        self.y = 0
+        self.y = -200
         self.dir_x = -10
 
     def draw(self, surface):
@@ -63,11 +63,11 @@ def main():
             if event.type == pygame.KEYDOWN:
                 if event.key == KEY_UP:
                     dc_logo.dir_y -= 20
-                    # dc_logo.image = pygame.image.load('images/DC-logo-tilt.png').convert_alpha()
+                    dc_logo.image = pygame.image.load('images/DC-logo-tilt.png').convert_alpha()
             if event.type == pygame.KEYUP:
                 if event.key == KEY_UP:
                     dc_logo.dir_y = 5
-                    # dc_logo.image = pygame.image.load('images/DC-logo.png').convert_alpha()
+                    dc_logo.image = pygame.image.load('images/DC-logo.png').convert_alpha()
 
             # stops the logo from going off the screen
             if dc_logo.y < 0:
