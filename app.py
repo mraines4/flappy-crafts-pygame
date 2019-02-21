@@ -17,25 +17,19 @@ class DC(object):
         self.y += self.dir_y
 
 # creates Pipe class
-class Pipes(object):
-    def __init__(self):
+class Pipes:
+    def __init__(self, x, y, speed):
         self.image = pygame.image.load('images/pipes.png').convert_alpha()
-        self.x = 1000
-        self.y = -200
-        self.dir_x = -10
+        self.x = x
+        self.y = y
+        self.speed = speed
 
-    def draw(self, surface):
-        surface.blit(self.image, (self.x, self.y))
+    def display(self, screen):
+        screen.blit(self.image, (self.x, self.y))
 
-    def update(self):
-        self.x += self.dir_x
+    def update(self, width):
+        self.x += self.speed
 
-pipe_list = [
-    # Pipes(-400),
-    # Pipes(100),
-    # Pipes(-200),
-    # Pipes(-300)
-]
 
 
 def main():
@@ -49,11 +43,14 @@ def main():
 
     # Game initialization (prints background image/pipes/and DC)
     background_image = pygame.image.load('images/background.png').convert_alpha()
-    # pipes = pygame.image.load('images/pipes.png').convert_alpha()
     dc_logo = DC()
-    # for pipe in pipe_list:
-    #     moving_pipe = Pipes()
-    moving_pipe = Pipes()
+    pipe_list = [
+    Pipes(1000, -400, -10),
+    Pipes(1000, 100, -10),
+    Pipes(1000,-200, -10),
+    Pipes(1000, -300, -10)
+]
+
 
     stop_game = False
     while not stop_game:
@@ -81,6 +78,8 @@ def main():
 
 
         # Game logic
+        for pipe in pipe_list:
+            pipe.update(width)
 
         # Draw background
         screen.blit(background_image, (0,0))
@@ -88,14 +87,9 @@ def main():
         # Game display
         dc_logo.draw(screen)
         dc_logo.update()
-        moving_pipe.draw(screen)
-        moving_pipe.update()
+        for pipe in pipe_list:
+            pipe.display(screen)
 
-        # dc_logo.handle_keys()
-        # screen.blit(pipes, (0,-400)),
-        # screen.blit(pipes, (100,-100)),
-        # screen.blit(pipes, (200,-200)),
-        # screen.blit(pipes, (300,-300))
         pygame.display.update()
         clock.tick(60)
 
