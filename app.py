@@ -61,6 +61,8 @@ class PipesDown(pygame.sprite.Sprite):
     def update(self, width):
         self.rect.x += self.speed
 
+def start_screen():
+    pass
 
 def main():
     width = 750
@@ -79,9 +81,9 @@ def main():
     # for each in pipe_list:
     #     pg.add(each)
 
-
     stop_game = False
     while not stop_game:
+        while
         pg = pygame.sprite.Group()
         for event in pygame.event.get():
             # Event handling for keystroke up for DC logo
@@ -112,20 +114,24 @@ def main():
             pipe_list.append(Pipes(750, (rndm_ydn + 700), -10))
             timer_count = 60
 
+        # Draw background
+        screen.blit(background_image, (0,0))
 
         # Game logic
         for pipe in pipe_list:
-            pipe.update(width)
             pg.add(pipe)
+
 
         # collision
         hit = pygame.sprite.spritecollide(dc_logo, pg, False)
         if hit:
-            # print("hit")
+            print("hit")
             dg.remove(dc_logo)
+        else:
+            for pipe in pipe_list:
+                pipe.update(width)
+        pg.draw(screen)
 
-        # Draw background
-        screen.blit(background_image, (0,0))
 
         # Game display
         # dc_logo.display(screen)
@@ -133,7 +139,6 @@ def main():
         dg.draw(screen)
         # for pipe in pipe_list:
         #     pipe.display(screen)
-        pg.draw(screen)
         pygame.display.update()
     
 
