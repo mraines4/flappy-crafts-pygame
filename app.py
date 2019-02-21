@@ -108,10 +108,9 @@ def main():
         # set timer over
         timer_count -= 1
         if timer_count == 0 and len(pipe_list) < 40:
-            rndm_yup = randint(400, 600)
-            rndm_ydn = randint(-400, -200)
+            rndm_ydn = randint(-400, 0)
             pipe_list.append(PipesDown(750, rndm_ydn, -10))
-            pipe_list.append(Pipes(750, (rndm_ydn + 100), -10))
+            pipe_list.append(Pipes(750, (rndm_ydn + 700), -10))
             timer_count = 60
 
 
