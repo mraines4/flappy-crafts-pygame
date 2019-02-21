@@ -4,13 +4,21 @@ from random import randint
 
 KEY_UP = 273
 
+# sprite class
+class Sprite(pygame.sprite.Sprite):
+    def __init__(self):
+        self.rect = self.image.get_rect()
+
+pg = pygame.sprite.Group()
+
 # create DC class
-class DC(object):
+class DC(pygame.sprite.Sprite):
     def __init__(self):
         self.image = pygame.image.load('images/DC-logo.png').convert_alpha()
         self.x = 60
         self.y = 400
         self.dir_y = 10
+        self.rect = self.image.get_rect()
 
     def draw(self, surface):
         surface.blit(self.image, (self.x, self.y))
@@ -19,12 +27,14 @@ class DC(object):
         self.y += self.dir_y
 
 # creates Pipe class
-class Pipes:
+class Pipes(pygame.sprite.Sprite):
     def __init__(self, x, y, speed):
         self.image = pygame.image.load('images/pipes.png').convert_alpha()
         self.x = x
         self.y = y
         self.speed = speed
+        self.rect = self.image.get_rect()
+        pygame.sprite.Sprite.__init__(self, pg)
 
     def display(self, screen):
         screen.blit(self.image, (self.x, self.y))
@@ -33,11 +43,9 @@ class Pipes:
         self.x += self.speed
 
 
-
 def main():
     width = 750
     height = 750
-
     pygame.init()
     screen = pygame.display.set_mode((width, height))
     pygame.display.set_caption('Flappy Crafts')
@@ -48,6 +56,8 @@ def main():
     dc_logo = DC()
     pipe_list = []
     timer_count = 60
+    for each in pipe_list:
+        pg.add(each)
 
 
     stop_game = False
@@ -58,11 +68,11 @@ def main():
             if event.type == pygame.KEYDOWN:
                 if event.key == KEY_UP:
                     dc_logo.dir_y -= 20
-                    dc_logo.image = pygame.image.load('images/DC-logo-tilt.png').convert_alpha()
+                    # dc_logo.image = pygame.image.load('images/DC-logo-tilt.png').convert_alpha()
             if event.type == pygame.KEYUP:
                 if event.key == KEY_UP:
                     dc_logo.dir_y = 10
-                    dc_logo.image = pygame.image.load('images/DC-logo.png').convert_alpha()
+                    # dc_logo.image = pygame.image.load('images/DC-logo.png').convert_alpha()
 
             # stops the logo from going off the screen
             if dc_logo.y < 0:
@@ -81,9 +91,15 @@ def main():
             rndm_y = randint(-400, -100)
             pipe_list.append(Pipes(1000, rndm_y, -10))
 
+
         # Game logic
         for pipe in pipe_list:
             pipe.update(width)
+
+        # collision
+        hit = pygame.sprite.spritecollideany(dc_logo, pg)
+        if hit:
+            print("hit")
 
         # Draw background
         screen.blit(background_image, (0,0))
@@ -93,9 +109,7 @@ def main():
         dc_logo.update()
         for pipe in pipe_list:
             pipe.display(screen)
-
         pygame.display.update()
-        clock.tick(60)
 
     pygame.quit()
 
