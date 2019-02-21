@@ -16,8 +16,8 @@ class DC(pygame.sprite.Sprite):
         self.dir_y = 10
         self.rect = self.image.get_rect()
 
-    def draw(self, surface):
-        surface.blit(self.image, (self.x, self.y))
+    def display(self, screen):
+        screen.blit(self.image, (self.x, self.y))
 
     def update(self):
         self.y += self.dir_y
@@ -101,7 +101,7 @@ def main():
         screen.blit(background_image, (0,0))
 
         # Game display
-        dc_logo.draw(screen)
+        dc_logo.display(screen)
         dc_logo.update()
         for pipe in pipe_list:
             pipe.display(screen)
