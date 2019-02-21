@@ -4,10 +4,6 @@ from random import randint
 
 KEY_UP = 273
 
-# sprite class
-class Sprite(pygame.sprite.Sprite):
-    def __init__(self):
-        self.rect = self.image.get_rect()
 
 pg = pygame.sprite.Group()
 
