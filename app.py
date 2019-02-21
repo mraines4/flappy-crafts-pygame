@@ -107,7 +107,7 @@ def main():
 
         # set timer over
         timer_count -= 1
-        if timer_count == 0 and len(pipe_list) < 20:
+        if timer_count == 0 and len(pipe_list) < 40:
             rndm_yup = randint(400, 600)
             rndm_ydn = randint(-400, -200)
             pipe_list.append(PipesDown(750, rndm_ydn, -10))
@@ -125,6 +125,7 @@ def main():
         hit = pygame.sprite.spritecollide(dc_logo, pg, False)
         if hit:
             print("hit")
+            dg.remove(dc_logo)
 
         # Draw background
         screen.blit(background_image, (0,0))
