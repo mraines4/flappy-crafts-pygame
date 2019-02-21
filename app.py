@@ -89,11 +89,11 @@ def main():
             if event.type == pygame.KEYDOWN:
                 if event.key == KEY_UP:
                     dc_logo.dir_y -= 20
-                    # dc_logo.image = pygame.image.load('images/DC-logo-tilt.png').convert_alpha()
+                    dc_logo.image = pygame.image.load('images/DC-logo-tilt.png').convert_alpha()
             if event.type == pygame.KEYUP:
                 if event.key == KEY_UP:
                     dc_logo.dir_y = 10
-                    # dc_logo.image = pygame.image.load('images/DC-logo.png').convert_alpha()
+                    dc_logo.image = pygame.image.load('images/DC-logo.png').convert_alpha()
 
             # stops the logo from going off the screen
             if dc_logo.rect.y < 0:
