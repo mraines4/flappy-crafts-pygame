@@ -8,7 +8,7 @@ class DC(object):
         self.image = pygame.image.load('images/DC-logo.png').convert_alpha()
         self.x = 60
         self.y = 400
-        self.dir_y = 10
+        self.dir_y = 5
 
     def draw(self, surface):
         surface.blit(self.image, (self.x, self.y))
@@ -62,12 +62,12 @@ def main():
             # Event handling for keystroke up for DC logo
             if event.type == pygame.KEYDOWN:
                 if event.key == KEY_UP:
-                    dc_logo.dir_y -= 40
-                    dc_logo.image = pygame.image.load('images/DC-logo-tilt.png').convert_alpha()
+                    dc_logo.dir_y -= 20
+                    # dc_logo.image = pygame.image.load('images/DC-logo-tilt.png').convert_alpha()
             if event.type == pygame.KEYUP:
                 if event.key == KEY_UP:
-                    dc_logo.dir_y = 10
-                    dc_logo.image = pygame.image.load('images/DC-logo.png').convert_alpha()
+                    dc_logo.dir_y = 5
+                    # dc_logo.image = pygame.image.load('images/DC-logo.png').convert_alpha()
 
             # stops the logo from going off the screen
             if dc_logo.y < 0:
