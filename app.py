@@ -60,8 +60,8 @@ class PipesDown(pygame.sprite.Sprite):
         self.rect.x += self.speed
 
 def main():
-    width = 750
-    height = 750
+    width = 790
+    height = 790
     pygame.init()
     screen = pygame.display.set_mode((width, height))
     pygame.display.set_caption('Flappy Crafts')
@@ -69,9 +69,12 @@ def main():
 
     # Game initialization (prints background image/pipes/and DC)
     background_image = pygame.image.load('images/background.png').convert_alpha()
+    welcome_image = pygame.image.load('images/welcome.png').convert_alpha()
 
     main_game = True
     while main_game:
+        screen.blit(welcome_image, (0,0))
+        pygame.display.update()
         playing = False
         for event in pygame.event.get():
                 # Event handling for keystroke up for DC logo
@@ -95,6 +98,8 @@ def main():
                     if event.key == KEY_UP:
                         dc_logo.dir_y = 10
                         dc_logo.image = pygame.image.load('images/DC-logo.png').convert_alpha()
+                if event.type == pygame.QUIT:
+                    pygame.quit()
 
                 # stops the logo from going off the screen
                 if dc_logo.rect.y < 0:
@@ -134,6 +139,7 @@ def main():
             dc_logo.update()
             dg.draw(screen)
             pygame.display.update()
+
 
         # quits game if red box clicked
         if event.type == pygame.QUIT:
