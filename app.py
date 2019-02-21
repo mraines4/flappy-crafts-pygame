@@ -1,4 +1,6 @@
 import pygame
+import random
+from random import randint
 
 KEY_UP = 273
 
@@ -8,7 +10,7 @@ class DC(object):
         self.image = pygame.image.load('images/DC-logo.png').convert_alpha()
         self.x = 60
         self.y = 400
-        self.dir_y = 5
+        self.dir_y = 10
 
     def draw(self, surface):
         surface.blit(self.image, (self.x, self.y))
@@ -44,12 +46,8 @@ def main():
     # Game initialization (prints background image/pipes/and DC)
     background_image = pygame.image.load('images/background.png').convert_alpha()
     dc_logo = DC()
-    pipe_list = [
-    Pipes(1000, -400, -10),
-    Pipes(1000, 100, -10),
-    Pipes(1000,-200, -10),
-    Pipes(1000, -300, -10)
-]
+    pipe_list = []
+    timer_count = 60
 
 
     stop_game = False
@@ -63,7 +61,7 @@ def main():
                     dc_logo.image = pygame.image.load('images/DC-logo-tilt.png').convert_alpha()
             if event.type == pygame.KEYUP:
                 if event.key == KEY_UP:
-                    dc_logo.dir_y = 5
+                    dc_logo.dir_y = 10
                     dc_logo.image = pygame.image.load('images/DC-logo.png').convert_alpha()
 
             # stops the logo from going off the screen
@@ -76,6 +74,12 @@ def main():
             if event.type == pygame.QUIT:
                 stop_game = True
 
+        # set timer over
+        timer_count -= 1
+        if timer_count == 0 and len(pipe_list) < 10:
+            timer_count = 60
+            rndm_y = randint(-400, -100)
+            pipe_list.append(Pipes(1000, rndm_y, -10))
 
         # Game logic
         for pipe in pipe_list:
