@@ -13,6 +13,23 @@ class DC(object):
     def draw(self, surface):
         surface.blit(self.image, (self.x, self.y))
 
+    def update(self):
+        self.y += self.dir_y
+
+# creates Pipe class
+# class Pipes(object):
+#     def __init__(self):
+#         self.image = pygame.image.load('images/DC-logo.png').convert_alpha()
+#         self.x = 60
+#         self.y = 400
+#         self.dir_y = 20
+
+#     def draw(self, surface):
+#         surface.blit(self.image, (self.x, self.y))
+
+# pipe_list = []
+
+
 def main():
     width = 800
     height = 800
@@ -26,6 +43,7 @@ def main():
     background_image = pygame.image.load('images/background.png').convert_alpha()
     pipes = pygame.image.load('images/pipes.png').convert_alpha()
     dc_logo = DC()
+    # pipe = Pipes(pipe_list)
 
     stop_game = False
     while not stop_game:
@@ -59,7 +77,7 @@ def main():
 
         # Game display
         dc_logo.draw(screen)
-        dc_logo.y += dc_logo.dir_y
+        dc_logo.update()
 
         # dc_logo.handle_keys()
         screen.blit(pipes, (0,-400)),
