@@ -5,10 +5,11 @@ class DC(object):
         self.image = pygame.image.load('images/DC-logo.png').convert_alpha()
         self.x = 60
         self.y = 400
+        self.dir_y = 10
 
     def handle_keys(self):
         key = pygame.key.get_pressed()
-        dist = 5
+        dist = 40
         if key[pygame.K_UP]:
             self.y -= dist
 
@@ -36,12 +37,15 @@ def main():
             # Event handling
             if dc_logo.y < 0:
                 dc_logo.y = 0
+            if dc_logo.y >= 800:
+                dc_logo.y = 800
 
             if event.type == pygame.QUIT:
                 stop_game = True
 
 
         # Game logic
+        dc_logo.y += dc_logo.dir_y
 
         # Draw background
         screen.blit(background_image, (0,0))
