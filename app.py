@@ -119,9 +119,7 @@ def main():
         # Game logic
         for pipe in pipe_list:
             pipe.update(width)
-
-        for each in pipe_list:
-            pg.add(each)
+            pg.add(pipe)
 
         # collision
         hit = pygame.sprite.spritecollide(dc_logo, pg, False)
