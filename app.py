@@ -12,6 +12,7 @@ class DC(object):
         dist = 40
         if key[pygame.K_UP]:
             self.y -= dist
+            self.image = pygame.image.load('images/DC-logo-tilt.png').convert_alpha()
 
     def draw(self, surface):
         surface.blit(self.image, (self.x, self.y))
