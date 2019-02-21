@@ -3,10 +3,8 @@ import random
 from random import randint
 
 KEY_UP = 273
+SPACE = 32
 
-
-# pg = pygame.sprite.Group()
-dg = pygame.sprite.Group()
 
 # create DC class
 class DC(pygame.sprite.Sprite):
@@ -61,9 +59,6 @@ class PipesDown(pygame.sprite.Sprite):
     def update(self, width):
         self.rect.x += self.speed
 
-def start_screen():
-    pass
-
 def main():
     width = 750
     height = 750
@@ -74,16 +69,20 @@ def main():
 
     # Game initialization (prints background image/pipes/and DC)
     background_image = pygame.image.load('images/background.png').convert_alpha()
-    dc_logo = DC()
-    dg.add(dc_logo)
-    pipe_list = []
-    timer_count = 60
-    # for each in pipe_list:
-    #     pg.add(each)
 
     main_game = True
     while main_game:
-        
+        playing = False
+        for event in pygame.event.get():
+                # Event handling for keystroke up for DC logo
+                if event.type == pygame.KEYDOWN:
+                    if event.key == SPACE:
+                        playing = True
+                        dg = pygame.sprite.Group()
+                        dc_logo = DC()
+                        dg.add(dc_logo)
+                        pipe_list = []
+                        timer_count = 60
         while playing:
             pg = pygame.sprite.Group()
             for event in pygame.event.get():
@@ -103,9 +102,6 @@ def main():
                 if dc_logo.rect.y >= 750:
                     dc_logo.rect.y = 750
 
-                # quits game if red box clicked
-                if event.type == pygame.QUIT:
-                    stop_game = True
 
             # set timer over
             timer_count -= 1
@@ -126,23 +122,22 @@ def main():
             # collision
             hit = pygame.sprite.spritecollide(dc_logo, pg, False)
             if hit:
-                print("hit")
                 dg.remove(dc_logo)
+                playing = False
             else:
                 for pipe in pipe_list:
                     pipe.update(width)
-                    break
             pg.draw(screen)
 
 
             # Game display
-            # dc_logo.display(screen)
             dc_logo.update()
             dg.draw(screen)
-            # for pipe in pipe_list:
-            #     pipe.display(screen)
             pygame.display.update()
-    
+
+        # quits game if red box clicked
+        if event.type == pygame.QUIT:
+            main_game = False
 
     pygame.quit()
 
