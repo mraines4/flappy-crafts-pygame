@@ -5,7 +5,8 @@ from random import randint
 KEY_UP = 273
 
 
-pg = pygame.sprite.Group()
+# pg = pygame.sprite.Group()
+dg = pygame.sprite.Group()
 
 # create DC class
 class DC(pygame.sprite.Sprite):
@@ -15,28 +16,33 @@ class DC(pygame.sprite.Sprite):
         self.y = 400
         self.dir_y = 10
         self.rect = self.image.get_rect()
+        pygame.sprite.Sprite.__init__(self)
+        self.rect.x = 60
+        self.rect.y  = 400
 
     def display(self, screen):
         screen.blit(self.image, (self.x, self.y))
 
     def update(self):
-        self.y += self.dir_y
+        self.rect.y += self.dir_y
 
 # creates Pipe class
 class Pipes(pygame.sprite.Sprite):
     def __init__(self, x, y, speed):
-        self.image = pygame.image.load('images/pipes.png').convert_alpha()
+        self.image = pygame.image.load('images/up-pipe.png').convert_alpha()
         self.x = x
         self.y = y
         self.speed = speed
         self.rect = self.image.get_rect()
-        pygame.sprite.Sprite.__init__(self, pg)
+        pygame.sprite.Sprite.__init__(self)
+        self.rect.x = x
+        self.rect.y = y
 
     def display(self, screen):
         screen.blit(self.image, (self.x, self.y))
 
     def update(self, width):
-        self.x += self.speed
+        self.rect.x += self.speed
 
 
 def main():
@@ -50,14 +56,16 @@ def main():
     # Game initialization (prints background image/pipes/and DC)
     background_image = pygame.image.load('images/background.png').convert_alpha()
     dc_logo = DC()
+    dg.add(dc_logo)
     pipe_list = []
     timer_count = 60
-    for each in pipe_list:
-        pg.add(each)
+    # for each in pipe_list:
+    #     pg.add(each)
 
 
     stop_game = False
     while not stop_game:
+        pg = pygame.sprite.Group()
         for event in pygame.event.get():
 
             # Event handling for keystroke up for DC logo
@@ -71,10 +79,10 @@ def main():
                     # dc_logo.image = pygame.image.load('images/DC-logo.png').convert_alpha()
 
             # stops the logo from going off the screen
-            if dc_logo.y < 0:
-                dc_logo.y = 0
-            if dc_logo.y >= 750:
-                dc_logo.y = 750
+            if dc_logo.rect.y < 0:
+                dc_logo.rect.y = 0
+            if dc_logo.rect.y >= 750:
+                dc_logo.rect.y = 750
 
             # quits game if red box clicked
             if event.type == pygame.QUIT:
@@ -85,15 +93,18 @@ def main():
         if timer_count == 0 and len(pipe_list) < 10:
             timer_count = 60
             rndm_y = randint(-400, -100)
-            pipe_list.append(Pipes(1000, rndm_y, -10))
+            pipe_list.append(Pipes(750, rndm_y, -10))
 
 
         # Game logic
         for pipe in pipe_list:
             pipe.update(width)
 
+        for each in pipe_list:
+            pg.add(each)
+
         # collision
-        hit = pygame.sprite.spritecollideany(dc_logo, pg)
+        hit = pygame.sprite.spritecollide(dc_logo, pg, False)
         if hit:
             print("hit")
 
@@ -101,11 +112,14 @@ def main():
         screen.blit(background_image, (0,0))
 
         # Game display
-        dc_logo.display(screen)
+        # dc_logo.display(screen)
         dc_logo.update()
-        for pipe in pipe_list:
-            pipe.display(screen)
+        dg.draw(screen)
+        # for pipe in pipe_list:
+        #     pipe.display(screen)
+        pg.draw(screen)
         pygame.display.update()
+    
 
     pygame.quit()
 
