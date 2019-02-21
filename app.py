@@ -34,6 +34,8 @@ def main():
         for event in pygame.event.get():
 
             # Event handling
+            if dc_logo.y < 0:
+                dc_logo.y = 0
 
             if event.type == pygame.QUIT:
                 stop_game = True
