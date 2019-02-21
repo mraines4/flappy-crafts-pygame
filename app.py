@@ -81,65 +81,67 @@ def main():
     # for each in pipe_list:
     #     pg.add(each)
 
-    stop_game = False
-    while not stop_game:
-        while
-        pg = pygame.sprite.Group()
-        for event in pygame.event.get():
-            # Event handling for keystroke up for DC logo
-            if event.type == pygame.KEYDOWN:
-                if event.key == KEY_UP:
-                    dc_logo.dir_y -= 20
-                    dc_logo.image = pygame.image.load('images/DC-logo-tilt.png').convert_alpha()
-            if event.type == pygame.KEYUP:
-                if event.key == KEY_UP:
-                    dc_logo.dir_y = 10
-                    dc_logo.image = pygame.image.load('images/DC-logo.png').convert_alpha()
+    main_game = True
+    while main_game:
+        
+        while playing:
+            pg = pygame.sprite.Group()
+            for event in pygame.event.get():
+                # Event handling for keystroke up for DC logo
+                if event.type == pygame.KEYDOWN:
+                    if event.key == KEY_UP:
+                        dc_logo.dir_y -= 20
+                        dc_logo.image = pygame.image.load('images/DC-logo-tilt.png').convert_alpha()
+                if event.type == pygame.KEYUP:
+                    if event.key == KEY_UP:
+                        dc_logo.dir_y = 10
+                        dc_logo.image = pygame.image.load('images/DC-logo.png').convert_alpha()
 
-            # stops the logo from going off the screen
-            if dc_logo.rect.y < 0:
-                dc_logo.rect.y = 0
-            if dc_logo.rect.y >= 750:
-                dc_logo.rect.y = 750
+                # stops the logo from going off the screen
+                if dc_logo.rect.y < 0:
+                    dc_logo.rect.y = 0
+                if dc_logo.rect.y >= 750:
+                    dc_logo.rect.y = 750
 
-            # quits game if red box clicked
-            if event.type == pygame.QUIT:
-                stop_game = True
+                # quits game if red box clicked
+                if event.type == pygame.QUIT:
+                    stop_game = True
 
-        # set timer over
-        timer_count -= 1
-        if timer_count == 0 and len(pipe_list) < 40:
-            rndm_ydn = randint(-400, 0)
-            pipe_list.append(PipesDown(750, rndm_ydn, -10))
-            pipe_list.append(Pipes(750, (rndm_ydn + 700), -10))
-            timer_count = 60
+            # set timer over
+            timer_count -= 1
+            if timer_count == 0 and len(pipe_list) < 40:
+                rndm_ydn = randint(-400, 0)
+                pipe_list.append(PipesDown(750, rndm_ydn, -10))
+                pipe_list.append(Pipes(750, (rndm_ydn + 700), -10))
+                timer_count = 60
 
-        # Draw background
-        screen.blit(background_image, (0,0))
+            # Draw background
+            screen.blit(background_image, (0,0))
 
-        # Game logic
-        for pipe in pipe_list:
-            pg.add(pipe)
-
-
-        # collision
-        hit = pygame.sprite.spritecollide(dc_logo, pg, False)
-        if hit:
-            print("hit")
-            dg.remove(dc_logo)
-        else:
+            # Game logic
             for pipe in pipe_list:
-                pipe.update(width)
-        pg.draw(screen)
+                pg.add(pipe)
 
 
-        # Game display
-        # dc_logo.display(screen)
-        dc_logo.update()
-        dg.draw(screen)
-        # for pipe in pipe_list:
-        #     pipe.display(screen)
-        pygame.display.update()
+            # collision
+            hit = pygame.sprite.spritecollide(dc_logo, pg, False)
+            if hit:
+                print("hit")
+                dg.remove(dc_logo)
+            else:
+                for pipe in pipe_list:
+                    pipe.update(width)
+                    break
+            pg.draw(screen)
+
+
+            # Game display
+            # dc_logo.display(screen)
+            dc_logo.update()
+            dg.draw(screen)
+            # for pipe in pipe_list:
+            #     pipe.display(screen)
+            pygame.display.update()
     
 
     pygame.quit()
