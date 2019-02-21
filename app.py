@@ -123,7 +123,7 @@ def main():
         # collision
         hit = pygame.sprite.spritecollide(dc_logo, pg, False)
         if hit:
-            print("hit")
+            # print("hit")
             dg.remove(dc_logo)
 
         # Draw background
