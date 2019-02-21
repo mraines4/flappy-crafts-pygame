@@ -84,7 +84,6 @@ def main():
     while not stop_game:
         pg = pygame.sprite.Group()
         for event in pygame.event.get():
-
             # Event handling for keystroke up for DC logo
             if event.type == pygame.KEYDOWN:
                 if event.key == KEY_UP:
@@ -112,7 +111,6 @@ def main():
             pipe_list.append(PipesDown(750, rndm_ydn, -10))
             pipe_list.append(Pipes(750, (rndm_ydn + 700), -10))
             timer_count = 60
-
 
 
         # Game logic
