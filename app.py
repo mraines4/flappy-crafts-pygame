@@ -162,18 +162,10 @@ def main():
                 pipe_list.append(PipesDown(750, rndm_ydn, -10))
                 pipe_list.append(Pipes(750, (rndm_ydn + 700), -10))
                 timer_count = 60
-            # elif timer_count == 0 and len(pipe_list) < 8:
-            #     rndm_ydn = randint(-300, 0)
-            #     pipe_list.append(PipesDown(750, rndm_ydn, -10))
-            #     pipe_list.append(Pipes(750, (rndm_ydn + 700), -10))
-            #     timer_count = 120
             elif timer_count == 0 and len(pipe_list) == 6:
                 print('yay')
                 cloud_move = True
                 wg.add(end_piece)
-                # end_piece.update()
-                # playing = False
-                # winning = True
 
             # Draw background 
             if lives == 3:
@@ -182,7 +174,6 @@ def main():
                 screen.blit(lives_2, (0,0))
             elif lives == 1:
                 screen.blit(lives_1, (0,0))
-            # screen.blit(background_image, (0,0))
 
             # Game logic
             for pipe in pipe_list:
