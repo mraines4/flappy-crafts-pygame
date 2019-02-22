@@ -61,11 +61,11 @@ class PipesDown(pygame.sprite.Sprite):
 
 # creates win piece class
 class WinPiece(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, speed):
         self.image = pygame.image.load('images/ribbon-jr.png').convert_alpha()
         self.x = 750
         self.y = 0
-        self.speed = -10
+        self.speed = speed
         self.rect = self.image.get_rect()
         pygame.sprite.Sprite.__init__(self)
         self.rect.x = 750
@@ -77,7 +77,7 @@ class WinPiece(pygame.sprite.Sprite):
     def update(self):
         self.rect.x += self.speed
 
-level1win = False
+ribbon_move = False
 
 
 def main():
@@ -102,8 +102,8 @@ def main():
     timer_count = 0
 
     def pipe_diff(num_pipes, speed, timer_count):
-        # timer_count -= 1
-        global level1win
+        rib_piece = WinPiece(speed)
+        global ribbon_move
         if timer_count == 0 and len(pipe_list) < num_pipes:
             rndm_ydn = randint(-300, 0)
             pipe_list.append(PipesDown(750, rndm_ydn, speed))
@@ -111,8 +111,8 @@ def main():
             timer_count = 60
         elif timer_count == 0 and len(pipe_list) == num_pipes:
             print('yay')
-            level1win = True
-            wg.add(end_piece)
+            ribbon_move = True
+            ribbon_list.append(WinPiece(speed))
         return timer_count -1
 
     main_game = True
@@ -138,7 +138,7 @@ def main():
                         dg.add(dc_logo)
                         pipe_list = []
                         wg = pygame.sprite.Group()
-                        end_piece = WinPiece()
+                        ribbon_list = []
                         timer_count = 60
                     if lives == 0:
                         if event.key == SPACE:
@@ -175,17 +175,7 @@ def main():
                 timer_count = pipe_diff(6, -10, timer_count)
             elif level == 2:
                 timer_count = pipe_diff(2, -5, timer_count)
-            # set timer over
-            # timer_count -= 1
-            # if timer_count == 0 and len(pipe_list) < 6:
-            #     rndm_ydn = randint(-300, 0)
-            #     pipe_list.append(PipesDown(750, rndm_ydn, -10))
-            #     pipe_list.append(Pipes(750, (rndm_ydn + 700), -10))
-            #     timer_count = 60
-            # elif timer_count == 0 and len(pipe_list) == 6:
-            #     print('yay')
-            #     level1win = True
-            #     wg.add(end_piece)
+
 
             # Draw background 
             if lives == 3:
@@ -198,6 +188,9 @@ def main():
             # Game logic
             for pipe in pipe_list:
                 pg.add(pipe)
+
+            for ribbon in ribbon_list:
+                wg.add(ribbon)
 
 
             # collision
@@ -214,6 +207,8 @@ def main():
             hit_ribbon = pygame.sprite.spritecollide(dc_logo, wg, False)
             if hit_ribbon and level < 2:
                 playing = False
+                global ribbon_move
+                ribbon_move = False
                 level += 1
             elif hit_ribbon and level == 2:
                 playing = False
@@ -223,9 +218,9 @@ def main():
             # Game display
             dc_logo.update()
             dg.draw(screen)
-            print(level1win)
-            if level1win == True:
-                end_piece.update()
+            if ribbon_move == True:
+                for ribbon in ribbon_list:
+                    ribbon.update()
             wg.draw(screen)
             pygame.display.update()
 
