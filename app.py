@@ -93,7 +93,7 @@ def main():
     lives_3 = pygame.image.load('images/3-lives.png').convert_alpha()
     lives_2 = pygame.image.load('images/2-lives.png').convert_alpha()
     lives_1 = pygame.image.load('images/1-lives.png').convert_alpha()
-    welcome_image = pygame.image.load('images/welcome.png').convert_alpha()
+    welcome_image = pygame.image.load('images/welcome.png').convert_alpha() 
     lost_life = pygame.image.load('images/lost-life.png').convert_alpha()
     game_over = pygame.image.load('images/game-over.png').convert_alpha()
     lives = 3
@@ -108,9 +108,17 @@ def main():
             rndm_ydn = randint(-300, 0)
             pipe_list.append(PipesDown(750, rndm_ydn, speed))
             pipe_list.append(Pipes(750, (rndm_ydn + 700), speed))
-            timer_count = 60
+            if level == 1:
+                timer_count = 60
+            elif level == 2:
+                timer_count = 50
+            elif level == 3:
+                timer_count = 40
+            elif level == 4:
+                timer_count = 30
+            elif level == 5:
+                timer_count = 20
         elif timer_count == 0 and len(pipe_list) == num_pipes:
-            print('yay')
             ribbon_move = True
             ribbon_list.append(WinPiece(speed))
         return timer_count -1
