@@ -88,11 +88,19 @@ def main():
     # Game initialization (prints background image/pipes/and DC)
     background_image = pygame.image.load('images/background.png').convert_alpha()
     welcome_image = pygame.image.load('images/welcome.png').convert_alpha()
-    end_piece = WinPiece()
+    lost_life = pygame.image.load('images/lost-life.png').convert_alpha()
+    game_over = pygame.image.load('images/game-over.png').convert_alpha()
+    lives = 3
 
     main_game = True
     while main_game:
-        screen.blit(welcome_image, (0,0))
+        if lives == 3:
+            screen.blit(welcome_image, (0,0))
+        elif lives < 3 and lives > 0:
+            screen.blit(lost_life, (0,0))
+        elif lives == 0:
+            screen.blit(game_over, (0,0))
+
         pygame.display.update()
         playing = False
         for event in pygame.event.get():
@@ -108,6 +116,10 @@ def main():
                         end_piece = WinPiece()
                         # wg.add(end_piece)
                         timer_count = 60
+                    if lives == 0:
+                        if event.key == SPACE:
+                            lives = 3
+                            playing = False
         while playing:
             pg = pygame.sprite.Group()
             for event in pygame.event.get():
@@ -152,6 +164,7 @@ def main():
             hit = pygame.sprite.spritecollide(dc_logo, pg, False)
             if hit:
                 dg.remove(dc_logo)
+                lives -= 1
                 playing = False
             else:
                 for pipe in pipe_list:
