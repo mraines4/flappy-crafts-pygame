@@ -86,7 +86,10 @@ def main():
     clock = pygame.time.Clock()
 
     # Game initialization (prints background image/pipes/and DC)
-    background_image = pygame.image.load('images/background.png').convert_alpha()
+    # background_image = pygame.image.load('images/background.png').convert_alpha()
+    lives_3 = pygame.image.load('images/3-lives.png').convert_alpha()
+    lives_2 = pygame.image.load('images/2-lives.png').convert_alpha()
+    lives_1 = pygame.image.load('images/1-lives.png').convert_alpha()
     welcome_image = pygame.image.load('images/welcome.png').convert_alpha()
     lost_life = pygame.image.load('images/lost-life.png').convert_alpha()
     game_over = pygame.image.load('images/game-over.png').convert_alpha()
@@ -153,7 +156,13 @@ def main():
                 wg.add(end_piece)
 
             # Draw background 
-            screen.blit(background_image, (0,0))
+            if lives == 3:
+                screen.blit(lives_3, (0,0))
+            elif lives == 2:
+                screen.blit(lives_2, (0,0))
+            elif lives == 1:
+                screen.blit(lives_1, (0,0))
+            # screen.blit(background_image, (0,0))
 
             # Game logic
             for pipe in pipe_list:
