@@ -93,10 +93,9 @@ def main():
     welcome_image = pygame.image.load('images/welcome.png').convert_alpha()
     lost_life = pygame.image.load('images/lost-life.png').convert_alpha()
     game_over = pygame.image.load('images/game-over.png').convert_alpha()
-    win_image = pygame.image.load('images/cloud.png')
     lives = 3
     winning = False
-    cloud_move = False
+    ribbon_move = False
 
     main_game = True
     while main_game:
@@ -164,7 +163,7 @@ def main():
                 timer_count = 60
             elif timer_count == 0 and len(pipe_list) == 6:
                 print('yay')
-                cloud_move = True
+                ribbon_move = True
                 wg.add(end_piece)
 
             # Draw background 
@@ -191,8 +190,8 @@ def main():
                     pipe.update(width)
             pg.draw(screen)
 
-            hit_cloud = pygame.sprite.spritecollide(dc_logo, wg, False)
-            if hit_cloud:
+            hit_ribbon = pygame.sprite.spritecollide(dc_logo, wg, False)
+            if hit_ribbon:
                 playing = False
                 winning = True
 
@@ -200,7 +199,7 @@ def main():
             # Game display
             dc_logo.update()
             dg.draw(screen)
-            if cloud_move == True:
+            if ribbon_move == True:
                 end_piece.update()
             wg.draw(screen)
             pygame.display.update()
