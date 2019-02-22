@@ -60,22 +60,22 @@ class PipesDown(pygame.sprite.Sprite):
         self.rect.x += self.speed
 
 # creates win piece class
-# class WinPiece(pygame.sprite.Sprite):
-#     def __init__(self):
-#         self.image = pygame.image.load('images/cloud.png').convert_alpha()
-#         self.x = 750
-#         self.y = 400
-#         self.speed = -10
-#         self.rect = self.image.get_rect()
-#         pygame.sprite.Sprite.__init__(self)
-#         self.rect.x = 750
-#         self.rect.y = 400
+class WinPiece(pygame.sprite.Sprite):
+    def __init__(self):
+        self.image = pygame.image.load('images/ribbon-jr.png').convert_alpha()
+        self.x = 750
+        self.y = 0
+        self.speed = -10
+        self.rect = self.image.get_rect()
+        pygame.sprite.Sprite.__init__(self)
+        self.rect.x = 750
+        self.rect.y = 0
 
-#     def display(self, screen):
-#         screen.blit(self.image, (self.x, self.y))
+    def display(self, screen):
+        screen.blit(self.image, (self.x, self.y))
 
-#     def update(self):
-#         self.rect.x += self.speed
+    def update(self):
+        self.rect.x += self.speed
 
 def main():
     width = 790
@@ -96,6 +96,7 @@ def main():
     win_image = pygame.image.load('images/cloud.png')
     lives = 3
     winning = False
+    cloud_move = False
 
     main_game = True
     while main_game:
@@ -119,8 +120,8 @@ def main():
                         dc_logo = DC()
                         dg.add(dc_logo)
                         pipe_list = []
-                        # wg = pygame.sprite.Group()
-                        # end_piece = WinPiece()
+                        wg = pygame.sprite.Group()
+                        end_piece = WinPiece()
                         # wg.add(end_piece)
                         timer_count = 60
                     if lives == 0:
@@ -161,16 +162,18 @@ def main():
                 pipe_list.append(PipesDown(750, rndm_ydn, -10))
                 pipe_list.append(Pipes(750, (rndm_ydn + 700), -10))
                 timer_count = 60
-            elif timer_count == 0 and len(pipe_list) < 8:
-                rndm_ydn = randint(-300, 0)
-                pipe_list.append(PipesDown(750, rndm_ydn, -10))
-                pipe_list.append(Pipes(750, (rndm_ydn + 700), -10))
-                timer_count = 120
-            elif timer_count == 0 and len(pipe_list) >= 8:
+            # elif timer_count == 0 and len(pipe_list) < 8:
+            #     rndm_ydn = randint(-300, 0)
+            #     pipe_list.append(PipesDown(750, rndm_ydn, -10))
+            #     pipe_list.append(Pipes(750, (rndm_ydn + 700), -10))
+            #     timer_count = 120
+            elif timer_count == 0 and len(pipe_list) == 6:
                 print('yay')
-                # wg.add(end_piece)
-                playing = False
-                winning = True
+                cloud_move = True
+                wg.add(end_piece)
+                # end_piece.update()
+                # playing = False
+                # winning = True
 
             # Draw background 
             if lives == 3:
@@ -197,12 +200,18 @@ def main():
                     pipe.update(width)
             pg.draw(screen)
 
+            hit_cloud = pygame.sprite.spritecollide(dc_logo, wg, False)
+            if hit_cloud:
+                playing = False
+                winning = True
+
 
             # Game display
             dc_logo.update()
             dg.draw(screen)
-            # end_piece.update()
-            # wg.draw(screen)
+            if cloud_move == True:
+                end_piece.update()
+            wg.draw(screen)
             pygame.display.update()
 
 
