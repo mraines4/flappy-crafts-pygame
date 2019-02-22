@@ -96,9 +96,14 @@ def main():
     welcome_image = pygame.image.load('images/welcome.png').convert_alpha() 
     lost_life = pygame.image.load('images/lost-life.png').convert_alpha()
     game_over = pygame.image.load('images/game-over.png').convert_alpha()
+    level2 = pygame.image.load('images/level2.png').convert_alpha()
+    level3 = pygame.image.load('images/level3.png').convert_alpha()
+    level4 = pygame.image.load('images/level4.png').convert_alpha()
+    level5 = pygame.image.load('images/level5.png').convert_alpha()
     lives = 3
     winning = False
     level = 1
+    levelup = False
     timer_count = 0
 
     def pipe_diff(num_pipes, speed, timer_count):
@@ -125,14 +130,22 @@ def main():
 
     main_game = True
     while main_game:
-        if lives == 3 and winning == False:
+        if lives == 3 and levelup == False:
             screen.blit(welcome_image, (0,0))
-        elif lives < 3 and lives > 0 and winning == False:
+        elif lives < 3 and lives > 0:
             screen.blit(lost_life, (0,0))
-        elif lives == 0 and winning == False:
+        elif lives == 0:
             screen.blit(game_over, (0,0))
         elif winning == True:
             screen.blit(winning_screen, (0,0))
+        elif level == 2 and levelup == True:
+            screen.blit(level2, (0,0))
+        elif level == 3 and levelup == True:
+            screen.blit(level3, (0,0))
+        elif level == 4 and levelup == True:
+            screen.blit(level4, (0,0))
+        elif level == 5 and levelup == True:
+            screen.blit(level5, (0,0))
 
         pygame.display.update()
         playing = False
@@ -152,6 +165,7 @@ def main():
                         if event.key == SPACE:
                             lives = 3
                             playing = False
+                            level = 1
                     if winning == True:
                         if event.key == SPACE:
                             lives = 3
@@ -225,6 +239,8 @@ def main():
                 ribbon_move = False
                 level += 1
                 lives = 3
+                levelup = True
+
             elif hit_ribbon and level == 5:
                 playing = False
                 winning = True
