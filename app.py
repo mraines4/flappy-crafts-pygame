@@ -59,6 +59,7 @@ class PipesDown(pygame.sprite.Sprite):
     def update(self, width):
         self.rect.x += self.speed
 
+# creates win piece class
 class WinPiece(pygame.sprite.Sprite):
     def __init__(self):
         self.image = pygame.image.load('images/cloud.png').convert_alpha()
