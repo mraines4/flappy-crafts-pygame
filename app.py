@@ -174,7 +174,13 @@ def main():
             if level == 1:
                 timer_count = pipe_diff(6, -10, timer_count)
             elif level == 2:
-                timer_count = pipe_diff(2, -5, timer_count)
+                timer_count = pipe_diff(10, -10, timer_count)
+            elif level == 3:
+                timer_count = pipe_diff(16, -15, timer_count)
+            elif level == 4:
+                timer_count = pipe_diff(20, -15, timer_count)
+            elif level == 5:
+                timer_count = pipe_diff(26, -20, timer_count)
 
 
             # Draw background 
@@ -205,12 +211,13 @@ def main():
             pg.draw(screen)
 
             hit_ribbon = pygame.sprite.spritecollide(dc_logo, wg, False)
-            if hit_ribbon and level < 2:
+            if hit_ribbon and level < 5:
                 playing = False
                 global ribbon_move
                 ribbon_move = False
                 level += 1
-            elif hit_ribbon and level == 2:
+                lives = 3
+            elif hit_ribbon and level == 5:
                 playing = False
                 winning = True
 
