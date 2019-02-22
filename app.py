@@ -60,22 +60,22 @@ class PipesDown(pygame.sprite.Sprite):
         self.rect.x += self.speed
 
 # creates win piece class
-class WinPiece(pygame.sprite.Sprite):
-    def __init__(self):
-        self.image = pygame.image.load('images/cloud.png').convert_alpha()
-        self.x = 750
-        self.y = 400
-        self.speed = -10
-        self.rect = self.image.get_rect()
-        pygame.sprite.Sprite.__init__(self)
-        self.rect.x = 750
-        self.rect.y = 400
+# class WinPiece(pygame.sprite.Sprite):
+#     def __init__(self):
+#         self.image = pygame.image.load('images/cloud.png').convert_alpha()
+#         self.x = 750
+#         self.y = 400
+#         self.speed = -10
+#         self.rect = self.image.get_rect()
+#         pygame.sprite.Sprite.__init__(self)
+#         self.rect.x = 750
+#         self.rect.y = 400
 
-    def display(self, screen):
-        screen.blit(self.image, (self.x, self.y))
+#     def display(self, screen):
+#         screen.blit(self.image, (self.x, self.y))
 
-    def update(self):
-        self.rect.x += self.speed
+#     def update(self):
+#         self.rect.x += self.speed
 
 def main():
     width = 790
@@ -86,23 +86,27 @@ def main():
     clock = pygame.time.Clock()
 
     # Game initialization (prints background image/pipes/and DC)
-    # background_image = pygame.image.load('images/background.png').convert_alpha()
+    winning_screen = pygame.image.load('images/winning-screen.png').convert_alpha()
     lives_3 = pygame.image.load('images/3-lives.png').convert_alpha()
     lives_2 = pygame.image.load('images/2-lives.png').convert_alpha()
     lives_1 = pygame.image.load('images/1-lives.png').convert_alpha()
     welcome_image = pygame.image.load('images/welcome.png').convert_alpha()
     lost_life = pygame.image.load('images/lost-life.png').convert_alpha()
     game_over = pygame.image.load('images/game-over.png').convert_alpha()
+    win_image = pygame.image.load('images/cloud.png')
     lives = 3
+    winning = False
 
     main_game = True
     while main_game:
-        if lives == 3:
+        if lives == 3 and winning == False:
             screen.blit(welcome_image, (0,0))
-        elif lives < 3 and lives > 0:
+        elif lives < 3 and lives > 0 and winning == False:
             screen.blit(lost_life, (0,0))
-        elif lives == 0:
+        elif lives == 0 and winning == False:
             screen.blit(game_over, (0,0))
+        elif winning == True:
+            screen.blit(winning_screen, (0,0))
 
         pygame.display.update()
         playing = False
@@ -115,14 +119,19 @@ def main():
                         dc_logo = DC()
                         dg.add(dc_logo)
                         pipe_list = []
-                        wg = pygame.sprite.Group()
-                        end_piece = WinPiece()
+                        # wg = pygame.sprite.Group()
+                        # end_piece = WinPiece()
                         # wg.add(end_piece)
                         timer_count = 60
                     if lives == 0:
                         if event.key == SPACE:
                             lives = 3
                             playing = False
+                    if winning == True:
+                        if event.key == SPACE:
+                            lives = 3
+                            playing = False
+                            winning = False
         while playing:
             pg = pygame.sprite.Group()
             for event in pygame.event.get():
@@ -152,8 +161,16 @@ def main():
                 pipe_list.append(PipesDown(750, rndm_ydn, -10))
                 pipe_list.append(Pipes(750, (rndm_ydn + 700), -10))
                 timer_count = 60
-            else:
-                wg.add(end_piece)
+            elif timer_count == 0 and len(pipe_list) < 8:
+                rndm_ydn = randint(-300, 0)
+                pipe_list.append(PipesDown(750, rndm_ydn, -10))
+                pipe_list.append(Pipes(750, (rndm_ydn + 700), -10))
+                timer_count = 120
+            elif timer_count == 0 and len(pipe_list) >= 8:
+                print('yay')
+                # wg.add(end_piece)
+                playing = False
+                winning = True
 
             # Draw background 
             if lives == 3:
@@ -184,8 +201,8 @@ def main():
             # Game display
             dc_logo.update()
             dg.draw(screen)
-            end_piece.update()
-            wg.draw(screen)
+            # end_piece.update()
+            # wg.draw(screen)
             pygame.display.update()
 
 
