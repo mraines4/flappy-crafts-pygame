@@ -61,8 +61,8 @@ class PipesDown(pygame.sprite.Sprite):
 
 # creates win piece class
 class WinPiece(pygame.sprite.Sprite):
-    def __init__(self, speed):
-        self.image = pygame.image.load('images/ribbon-jr.png').convert_alpha()
+    def __init__(self, speed, level_image):
+        self.image = level_image
         self.x = 750
         self.y = 0
         self.speed = speed
@@ -106,8 +106,8 @@ def main():
     levelup = False
     timer_count = 0
 
-    def pipe_diff(num_pipes, speed, timer_count):
-        rib_piece = WinPiece(speed)
+    def pipe_diff(num_pipes, speed, timer_count, level_image):
+        rib_piece = WinPiece(speed, level_image)
         global ribbon_move
         if timer_count == 0 and len(pipe_list) < num_pipes:
             rndm_ydn = randint(-300, 0)
@@ -125,16 +125,16 @@ def main():
                 timer_count = 20
         elif timer_count == 0 and len(pipe_list) == num_pipes:
             ribbon_move = True
-            ribbon_list.append(WinPiece(speed))
+            ribbon_list.append(WinPiece(speed, level_image))
         return timer_count -1
 
     main_game = True
     while main_game:
         if lives == 3 and levelup == False:
             screen.blit(welcome_image, (0,0))
-        elif lives < 3 and lives > 0:
+        elif lives < 3 and lives > 0 and winning == False:
             screen.blit(lost_life, (0,0))
-        elif lives == 0:
+        elif lives == 0 and winning == False:
             screen.blit(game_over, (0,0))
         elif winning == True:
             screen.blit(winning_screen, (0,0))
@@ -171,6 +171,7 @@ def main():
                             lives = 3
                             playing = False
                             winning = False
+                            level = 1
         while playing:
             pg = pygame.sprite.Group()
             for event in pygame.event.get():
@@ -194,15 +195,15 @@ def main():
 
 
             if level == 1:
-                timer_count = pipe_diff(6, -10, timer_count)
+                timer_count = pipe_diff(6, -10, timer_count, pygame.image.load('images/ribbon-intern.png').convert_alpha())
             elif level == 2:
-                timer_count = pipe_diff(10, -10, timer_count)
+                timer_count = pipe_diff(10, -15, timer_count, pygame.image.load('images/ribbon-jr.png').convert_alpha())
             elif level == 3:
-                timer_count = pipe_diff(16, -15, timer_count)
+                timer_count = pipe_diff(16, -20, timer_count, pygame.image.load('images/ribbon-sd.png').convert_alpha())
             elif level == 4:
-                timer_count = pipe_diff(20, -15, timer_count)
+                timer_count = pipe_diff(20, -25, timer_count, pygame.image.load('images/ribbon-senior.png').convert_alpha())
             elif level == 5:
-                timer_count = pipe_diff(26, -20, timer_count)
+                timer_count = pipe_diff(26, -30, timer_count, pygame.image.load('images/ribbon-cto.png').convert_alpha())
 
 
             # Draw background 
@@ -242,8 +243,9 @@ def main():
                 levelup = True
 
             elif hit_ribbon and level == 5:
-                playing = False
                 winning = True
+                playing = False
+                levelup = False
 
 
             # Game display
