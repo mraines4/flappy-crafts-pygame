@@ -167,6 +167,7 @@ def main():
                             lives = 3
                             playing = False
                             level = 1
+                            levelup = False
                     if winning == True:
                         if event.key == SPACE:
                             lives = 3
