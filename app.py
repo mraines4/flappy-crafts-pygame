@@ -22,7 +22,8 @@ class DC(pygame.sprite.Sprite):
         screen.blit(self.image, (self.x, self.y))
 
     def update(self):
-        self.rect.y += self.dir_y
+        if self.rect.y <= 750 and self.rect.y >= 0:
+            self.rect.y += self.dir_y
 
 # creates Pipe class
 class Pipes(pygame.sprite.Sprite):
