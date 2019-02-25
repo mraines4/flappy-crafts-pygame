@@ -11,4 +11,4 @@ In order to complete each level, you must make your way through the tubes withou
 This python exercise implemented the lessons we learned using OOP and Classes combined with our previous lessons on lists, functions, loops, and more.
 
 Click image for gameplay demo:
-[![FLAPPY CRAFTS](https://img.youtube.com/vi/wAltqOlIMXg/10.jpg)](https://www.youtube.com/watch?v=wAltqOlIMXg)
+[![FLAPPY CRAFTS](https://img.youtube.com/vi/wAltqOlIMXg/0.jpg)](https://www.youtube.com/watch?v=wAltqOlIMXg)
