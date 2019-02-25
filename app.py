@@ -129,9 +129,10 @@ def main():
             ribbon_list.append(WinPiece(speed, level_image))
         return timer_count -1
 
+    # This main while loop will bring game back to welcome/level/winning screens when you arent playing
     main_game = True
     while main_game:
-        if lives == 3 and levelup == False:
+        if lives == 3 and levelup == False and winning == False:
             screen.blit(welcome_image, (0,0))
         elif lives < 3 and lives > 0 and winning == False:
             screen.blit(lost_life, (0,0))
@@ -150,6 +151,7 @@ def main():
 
         pygame.display.update()
         playing = False
+        # these controls handle the initiation of the PLAYING loop
         for event in pygame.event.get():
                 # Event handling for keystroke up for DC logo
                 if event.type == pygame.KEYDOWN:
@@ -174,6 +176,7 @@ def main():
                             playing = False
                             winning = False
                             level = 1
+        # this while loop is the actual game play. it handles each level
         while playing:
             pg = pygame.sprite.Group()
             for event in pygame.event.get():
