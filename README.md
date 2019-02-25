@@ -9,3 +9,5 @@ To play this game, you hit SPACE to initialize game play. During each of the 5 l
 In order to complete each level, you must make your way through the tubes without touching them.
 
 This python exercise implemented the lessons we learned using OOP and Classes combined with our previous lessons on lists, functions, loops, and more.
+
+[![FLAPPY CRAFTS](https://img.youtube.com/vi/wAltqOlIMXg/0.jpg)](https://www.youtube.com/watch?v=wAltqOlIMXg)
